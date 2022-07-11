@@ -1,277 +1,342 @@
 <!DOCTYPE html>
 <html>
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <head>
     <style>
-      .row{
-  display:flex;
-  flex-wrap:wrap;
-}
+      #root {
+        position: relative;
+        z-index: 1;
+        padding-bottom: 60px;
+      }
+      .row {
+        display: flex;
+        flex-wrap: wrap;
+      }
 
-      
-.cell{
-  width:100%;
-  position:relative;
-  display:flex;
-  border: solid 1px black;
-  box-sizing:border-box; 
-}
+      .cell {
+        width: 100%;
+        position: relative;
+        display: flex;
+        border: solid 1px black;
+        box-sizing: border-box;
+      }
 
-.number{
-  background:black;
-  color:white;
-  padding:4px;
-  font-size:30px;
-  position:absolute;
-  top:0;
-  left:0;
-  
-}
+      .number {
+        background: black;
+        color: white;
+        padding: 4px;
+        font-size: 30px;
+        position: absolute;
+        top: 0;
+        left: 0;
+      }
 
-.exTitle{
-  margin-top:0px;
-  margin-bottom:10px;
-  padding-left:25px;
-  font-size: 1.2em;
-}
+      .exTitle {
+        margin-top: 0px;
+        margin-bottom: 10px;
+        padding-left: 25px;
+        font-size: 1.2em;
+      }
 
-.exDesc{
-  padding: 0;
-  margin:0;
-}
+      .exDesc {
+        padding: 0;
+        margin: 0;
+      }
 
-.imageWrap{
-  width:50%;
+      .imageWrap {
+        width: 50%;
+      }
 
-}
+      .imageWrap img {
+        width: 100%;
+      }
 
-.imageWrap img{
-  width:100%
-}
+      .description {
+        font-size: 20px;
+        padding: 10px;
+      }
 
-.description{
-  font-size:20px;
-    padding:10px;
-}
+      .stopwatch {
+        width: 100%;
+        position: fixed;
+        height: 60px;
+        border-top: solid 1px #aaa;
+        z-index: 2;
+        background: white;
+        bottom: 0;
+        left: 0;
+        display: flex;
+        justify-content: flex-end;
+      }
 
-@media (min-width: 768px) { 
-.cell{
-  width:50%;
-  position:relative;
-  display:flex;
-  border: solid 1px black;
-  }
-}
+      .time {
+        flex-grow: 2;
+        text-align: center;
+        font-size: 2.5em;
+        padding: 0;
+        margin: 0;
+        align-self: center;
+      }
+
+      @media (min-width: 768px) {
+        .cell {
+          width: 50%;
+          position: relative;
+          display: flex;
+          border: solid 1px black;
+        }
+      }
     </style>
   </head>
   <body>
-    <div>
-  <div class="row">
-    <div class="cell">
-      <span class="number">1</span>
-      <div class="imageWrap">
-        <img src="https://i.ytimg.com/vi/Rzeo2EMk-rk/maxresdefault.jpg"/>
-      </div>
-      <div class="description">
-        <h5 class="exTitle">90-degree pull up isometrics (regular grip)</h5>
-        <p class="exDesc">  
-  5-second hold:3-secon rest x 3 reps. Focus is on chest, back and core tension. Pull up bar or Jugs on the climbing wall</p>
-      </div>
+    <div id="root"></div>
+    <div class="stopwatch">
+      <p class="time">
+        <span id="minutes">00</span>:<span id="seconds">00</span>:<span
+          id="tens"
+          >00</span
+        >
+      </p>
+      <button id="button-start">Start</button>
+      <button id="button-stop">Stop</button>
+      <button id="button-reset">Reset</button>
     </div>
-     <div class="cell">
-      <span class="number">2</span>
-      <div class="imageWrap">
-        <img src="https://media.self.com/photos/57da2eaa46d0cb351c8c7ebc/16:9/w_1279,h_719,c_limit/correct-squat_feat.jpg"/>
-      </div>
-      <div class="description">
-        <h5 class="exTitle">Depth squat to calf raise </h5>
-        <p class="exDesc">  
-  1 X10 reps with 2-second tempo. Toes pointing forward, squat to comfortable depth, stand on toes at top of each rep</p>
-      </div>
-    </div>
-     <div class="cell">
-      <span class="number">3</span>
-      <div class="imageWrap">
-        <img src="https://i.ytimg.com/vi/jIlLYdA7gQA/maxresdefault.jpg"/>
-      </div>
-      <div class="description">
-        <h5 class="exTitle">90-degree pull up isometrics (reverse grip)</h5>
-        <p class="exDesc">  
-  5-second hold:3-second rest x 3 reps. Focus is chest, back and core tension. Pull up bar or Jugs on the climbing wall</p>
-      </div>
-    </div>
-     <div class="cell">
-      <span class="number">4</span>
-      <div class="imageWrap">
-        <img src="https://cdn4.vectorstock.com/i/1000x1000/91/73/man-doing-bodyweight-sumo-wide-stance-squats-vector-38309173.jpg"/>
-      </div>
-      <div class="description">
-        <h5 class="exTitle">Hips open squat to calf raise</h5>
-        <p class="exDesc">  
-  1x 10 reps (2sec tempo). Feet wider than shoulders, toes slightly out, squat to comfortable depth, stad on toes at top of each rep.</p>
-      </div>
-    </div>
-    
-  </div>
-  <script>
-     let ipp = [
-       [
+    <script>
+      let ipp = [
+        [
           {
-          "title": "90-degree pull up isometrics(regular grip).",
-          "description": "5-second hold:3-second rest x 3 reps. Focus is chest, back, and core tension. Pull up bar (or) Jugs on the climbing wall."
+            title: "90-degree pull up isometrics(regular grip).",
+            description:
+              "5-second hold:3-second rest x 3 reps. Focus is chest, back, and core tension. Pull up bar (or) Jugs on the climbing wall."
           },
           {
-          "title": "Depth squat to calf raise.",
-          "description": "1 x 10 reps with a 2-second Tempo. Toes pointing forward, squat to a comfortable depth, stand on toes at the top of each rep."
+            title: "Depth squat to calf raise.",
+            description:
+              "1 x 10 reps with a 2-second Tempo. Toes pointing forward, squat to a comfortable depth, stand on toes at the top of each rep."
           },
           {
-          "title": "90-degree pull up isometrics (reverse grip)",
-          "description": " 5-second hold:3-second rest x 3 reps. Focus is chest, back, and core tension. Pull up bar (or) Jugs on the climbing wall."
+            title: "90-degree pull up isometrics (reverse grip)",
+            description:
+              " 5-second hold:3-second rest x 3 reps. Focus is chest, back, and core tension. Pull up bar (or) Jugs on the climbing wall."
           },
           {
-          "title": " Hips open squat to calf raise",
-          "description": "1 x 10 reps (2s. Tempo). Feet wider than shoulders, toes slightly out, squat to a comfortable depth, stand on toes at the top of each rep"
+            title: " Hips open squat to calf raise",
+            description:
+              "1 x 10 reps (2s. Tempo). Feet wider than shoulders, toes slightly out, squat to a comfortable depth, stand on toes at the top of each rep"
           },
           {
-          "title": "120-degree pull up isometrics (regular grip)",
-          "description": "5-second hold:3-second rest x 3 reps. Focus is chest, back, and core tension. Pull up bar (or) Jugs on the climbing wall."
+            title: "120-degree pull up isometrics (regular grip)",
+            description:
+              "5-second hold:3-second rest x 3 reps. Focus is chest, back, and core tension. Pull up bar (or) Jugs on the climbing wall."
           },
           {
-          "title": "Single leg toe touches",
-          "description": "1 x 5 reps each leg with a 2-secnd tempo. 120- degree knee joint angle, touch the toes with opposite hand each rep. Reach with control"
+            title: "Single leg toe touches",
+            description:
+              "1 x 5 reps each leg with a 2-secnd tempo. 120- degree knee joint angle, touch the toes with opposite hand each rep. Reach with control"
           },
           {
-          "title": "120-degree pull up isometrics (widest grip)",
-          "description": "5-second hold:3-second rest x 3 reps. Focus is chest, back, and core tension. Pull up bar (or) Jugs on the climbing wall."
+            title: "120-degree pull up isometrics (widest grip)",
+            description:
+              "5-second hold:3-second rest x 3 reps. Focus is chest, back, and core tension. Pull up bar (or) Jugs on the climbing wall."
           },
           {
-          "title": "lock face toe taps",
-          "description": "1 x 4 reps each leg with a 2-second hold each position. Reach 4 positions at the bottom half of the clock (3,5,7,9) each leg. Reach with control for max distance."
+            title: "lock face toe taps",
+            description:
+              "1 x 4 reps each leg with a 2-second hold each position. Reach 4 positions at the bottom half of the clock (3,5,7,9) each leg. Reach with control for max distance."
           }
-       ],
-       [
-       {
-          "title": "Straight elbow pull up isometrics (regular grip).",
-          "description": "5-second hold: 3-second rest x 3 reps. Focus is shoulder, scapular, and core tension. Pull up bar (or) Jugs on the climbing wall."},
-          {
-          "title": "Single leg eccentric squats.",
-          "description": "1 x 10 reps (5 each leg). Squat under control to a mid-shin surface, stand up with both legs. Knee should go over toe, knee staying straight, not crossing midline."},
-          {
-          "title": "Shoulder rotation isometrics",
-          "description": "1 x 6 reps with a 7-second hold each rep. With a partner, alternate hand positions every rep. 3 repetitions each direction at 70% intensity."},
-          {
-          "title": "Single leg concentric squats.",
-          "description": "1 x 10 reps (5 each leg). Stand up under control from a mid-shin surface, sit down with both legs. Knee should go over toe, knee staying straight, not crossing midline."},
-          {
-          "title": "Shoulder compression isometrics.",
-          "description": "1 x 6 reps with a 7-second hold each rep. With a partner, alternate hand positions every rep. 3 repetitions each direction at 70% intensity."},
-          {
-          "title": "Spread the floor squat isometrics.",
-          "description": "1 x 20-seconds continuous. Feet wider than shoulders and toes slightly out, squat to a comfortable depth while actively contracting the knees away from midline."},
-          {
-          "title": "Multi-direction pushing isometrics",
-          "description": "1 x 20-seconds continuous. With a partner, move through top of circle, then through bottom of circle at 70% intensity"},
-          {
-          "title": "Squeeze the hands squat isometrics.",
-          "description": " 1 x 20-seconds continuous. Feet shoulder width and toes slightly in, squat to 120- degrees at the knee while actively compressing both fists together."},
-
-       ],
-       [
-       {
-          "title": "90-degree push up isometric (wide position)",
-          "description": "7-second hold:3-second rest x 3 reps. Arms wider than shoulders, head in-line with heels, lower and hold while focusing on whole body tension."},
-          {
-          "title": "90-degree hip-thruster on heels",
-          "description": "1 x10 reps with a 2-second hold at the top position. Lying on ground, knees at 90-degrees, lift hips off the ground from your heels. Focus is glute and hamstring tension."},
-          {
-          "title": "90-degree push up isometric (regular position)",
-          "description": "7-second hold:3-second rest x 3 reps. Arms shoulder width, head in-line with heels, lower and hold while focusing on whole body tension."},
-          {
-          "title": "Single leg hip-thruster on heels",
-          "description": "1 x 5 reps/leg with a 2-second hold at the top position. Lying on ground, knee at 90-degrees, lift hips and opposite leg off ground. Focus is glute and hamstring tension."},
-          {
-          "title": "90-degree push up isometric (unlevel position)",
-          "description": "7-second hold:3-second rest x 3 reps. Arms unlevel, head in-line with heels, lower and hold while focusing on whole body tension."},
-          {
-          "title": "120-degree hip-thruster on heels.",
-          "description": "1 x 10 reps with a 2-second hold at the top position. Lying on ground, knees at 120-degrees, lift hips off the ground from your heels. Focus is glute and hamstring tension."},
-          {
-          "title": "Single arm / leg plank isometric.",
-          "description": "3-seconds on:3-seconds off x 6 reps. Once on all fours, use the opposite elbow/toe and control the position through the core and hips. Alternate each rep."},
-          {
-          "title": "Single leg hip-thruster on heels.",
-          "description": "1 x 5 reps/leg with a 2-second hold at the top position. Lying on ground, knee at 120-d, lift hips and opposite leg off ground. Focus is glute and hamstring tension. "}
-       ],
-
- 
-       [
-       {
-          "title": " Open hand hangs",
-          "description": "7-seconds on:3-seconds off x 5 reps. Sub to full bodyweight pending strength. 70% intensity. Jug edge, wide bar, or sloper. All 4-fingers with the PIP joint around 120-degrees"},
-          {
-          "title": "Standing heel to toe rockers",
-          "description": "1 x 10 reps. Stand on toes with control, slowly roll back onto your heels and lift toes each rep. Hold on to help accentuate the motion."},
-          {
-          "title": "Open hand hangs",
-          "description": "7-seconds on:3-seconds off x 5 reps. Sub to full bodyweight pending strength. 70% intensity. Jug edge, wide bar, or sloper. All 4-fingers with the PIP joint around 120-degrees"},
-          {
-          "title": "Standing foot scoop/separation isometrics",
-          "description": "1 x 10 reps. Feet shoulder width, “scoop” the floor together with the bottoms of your feet for 2-seconds, then separate the floor for 2-seconds each rep."},
-          {
-          "title": "Flat edge hangs (30mm)",
-          "description": "7-seconds on:3-seconds off x 4 reps. Sub to full bodyweight. 70% intensity. Flat edge or fingerboard. All 4-fingers with the PIP joint at 90-degrees."},
-          {
-          "title": "Concentric focused box jumps",
-          "description": "1 x 5 reps to a 18-30\" surface pending athlete. Squat to 90-degrees, hold for 2-seconds, jump on the surface with a soft landing. Focus is acceleration and landing."},
-          {
-          "title": "Flat edge hangs (30mm)",
-          "description": "7-seconds on:3-seconds off x 4 reps. Sub to full bodyweight. 70% intensity. Flat edge or fingerboard. All 4-fingers with the PIP joint at 90-degrees"},
-          {
-          "title": "Eccentric box drops",
-          "description": "1 x 5 reps from a 18-30\" surface pending athlete. Stand on the surface, step forward and drop quickly with a soft landing. Focus is deceleration and force absorption."},
-         ],
-       [
-       {
-          "title": "Feet down explosive pull-ups",
-          "description": "1 x 4-8 reps pending strength. Arms extended overhead, push with the toes to increase the velocity of each rep. Power focus on a bar or jugs. 1-2s. between reps."},
-          {
-          "title": "Forward jumps with a single leg landing",
-          "description": "1 x 10 reps (5 per leg). With both legs, Jump straight at a controlled distance and confidently absorb the landing. Focus is acceleration and deceleration."},
-          {
-          "title": "Moderate edge rapid hangs (20mm)",
-          "description": "5-seconds on:3-seconds off x 3 reps. Full bodyweight and 70% intensity. Engage the edge rapidly each rep. All 4-fingers with the PIP joint at 90-degrees."},
-          {
-          "title": "Chest elevated power push up.",
-          "description": "4-8 reps pending strength. Hands on a bench, arms shoulder width, press explosively to a standing position. Focus is acceleration and reducing the landing forces on the wrist."},
-          {
-          "title": "Single leg lateral jumps",
-          "description": "1 x 10 reps (5 per leg). With one leg, jump to the side at a controlled distance and confidently absorb the landing. Focus is acceleration and deceleration."},
-          {
-          "title": "Moderate edge rapid hangs (20mm)",
-          "description": "5-seconds on:3-seconds off x 3 reps. Full bodyweight and 70% intensity. Engage the edge rapidly each rep. All 4-fingers with the PIP joint at 90-degrees."}
         ],
-       [
-       {
-          "title": " Countermovement jump and catch",
-          "description": "1 x 5-7 reps pending strength. Jump to a jug/bar and hold the 90-degree elbow angle for 3s. Catch hand could be one or two arm pending strength."},
+        [
           {
-          "title": "Feet on power move",
-          "description": "1 x 8 reps (4 per arm). At least 5s. rest (off wall) between reps. Focus is highcoordination power. Alternate arms every rep and go the greatest distance possible with feet on."},
+            title: "Straight elbow pull up isometrics (regular grip).",
+            description:
+              "5-second hold: 3-second rest x 3 reps. Focus is shoulder, scapular, and core tension. Pull up bar (or) Jugs on the climbing wall."
+          },
           {
-          "title": "Countermovement jump and catch (angle)",
-          "description": "1 x 5-7 reps pending strength. Jump to a jug/bar and hold for 3s. Catch hand could be one or two arm pending strength."},
+            title: "Single leg eccentric squats.",
+            description:
+              "1 x 10 reps (5 each leg). Squat under control to a mid-shin surface, stand up with both legs. Knee should go over toe, knee staying straight, not crossing midline."
+          },
           {
-          "title": "Feet off power move",
-          "description": "1 x 6 reps (3 per arm). At least 5s. rest (off wall) between reps. Focus is highcoordination power. Alternate arms every rep and go moderate distance with feet coming off for the catch."}
+            title: "Shoulder rotation isometrics",
+            description:
+              "1 x 6 reps with a 7-second hold each rep. With a partner, alternate hand positions every rep. 3 repetitions each direction at 70% intensity."
+          },
+          {
+            title: "Single leg concentric squats.",
+            description:
+              "1 x 10 reps (5 each leg). Stand up under control from a mid-shin surface, sit down with both legs. Knee should go over toe, knee staying straight, not crossing midline."
+          },
+          {
+            title: "Shoulder compression isometrics.",
+            description:
+              "1 x 6 reps with a 7-second hold each rep. With a partner, alternate hand positions every rep. 3 repetitions each direction at 70% intensity."
+          },
+          {
+            title: "Spread the floor squat isometrics.",
+            description:
+              "1 x 20-seconds continuous. Feet wider than shoulders and toes slightly out, squat to a comfortable depth while actively contracting the knees away from midline."
+          },
+          {
+            title: "Multi-direction pushing isometrics",
+            description:
+              "1 x 20-seconds continuous. With a partner, move through top of circle, then through bottom of circle at 70% intensity"
+          },
+          {
+            title: "Squeeze the hands squat isometrics.",
+            description:
+              " 1 x 20-seconds continuous. Feet shoulder width and toes slightly in, squat to 120- degrees at the knee while actively compressing both fists together."
+          }
+        ],
+        [
+          {
+            title: "90-degree push up isometric (wide position)",
+            description:
+              "7-second hold:3-second rest x 3 reps. Arms wider than shoulders, head in-line with heels, lower and hold while focusing on whole body tension."
+          },
+          {
+            title: "90-degree hip-thruster on heels",
+            description:
+              "1 x10 reps with a 2-second hold at the top position. Lying on ground, knees at 90-degrees, lift hips off the ground from your heels. Focus is glute and hamstring tension."
+          },
+          {
+            title: "90-degree push up isometric (regular position)",
+            description:
+              "7-second hold:3-second rest x 3 reps. Arms shoulder width, head in-line with heels, lower and hold while focusing on whole body tension."
+          },
+          {
+            title: "Single leg hip-thruster on heels",
+            description:
+              "1 x 5 reps/leg with a 2-second hold at the top position. Lying on ground, knee at 90-degrees, lift hips and opposite leg off ground. Focus is glute and hamstring tension."
+          },
+          {
+            title: "90-degree push up isometric (unlevel position)",
+            description:
+              "7-second hold:3-second rest x 3 reps. Arms unlevel, head in-line with heels, lower and hold while focusing on whole body tension."
+          },
+          {
+            title: "120-degree hip-thruster on heels.",
+            description:
+              "1 x 10 reps with a 2-second hold at the top position. Lying on ground, knees at 120-degrees, lift hips off the ground from your heels. Focus is glute and hamstring tension."
+          },
+          {
+            title: "Single arm / leg plank isometric.",
+            description:
+              "3-seconds on:3-seconds off x 6 reps. Once on all fours, use the opposite elbow/toe and control the position through the core and hips. Alternate each rep."
+          },
+          {
+            title: "Single leg hip-thruster on heels.",
+            description:
+              "1 x 5 reps/leg with a 2-second hold at the top position. Lying on ground, knee at 120-d, lift hips and opposite leg off ground. Focus is glute and hamstring tension. "
+          }
+        ],
+
+        [
+          {
+            title: " Open hand hangs",
+            description:
+              "7-seconds on:3-seconds off x 5 reps. Sub to full bodyweight pending strength. 70% intensity. Jug edge, wide bar, or sloper. All 4-fingers with the PIP joint around 120-degrees"
+          },
+          {
+            title: "Standing heel to toe rockers",
+            description:
+              "1 x 10 reps. Stand on toes with control, slowly roll back onto your heels and lift toes each rep. Hold on to help accentuate the motion."
+          },
+          {
+            title: "Open hand hangs",
+            description:
+              "7-seconds on:3-seconds off x 5 reps. Sub to full bodyweight pending strength. 70% intensity. Jug edge, wide bar, or sloper. All 4-fingers with the PIP joint around 120-degrees"
+          },
+          {
+            title: "Standing foot scoop/separation isometrics",
+            description:
+              "1 x 10 reps. Feet shoulder width, “scoop” the floor together with the bottoms of your feet for 2-seconds, then separate the floor for 2-seconds each rep."
+          },
+          {
+            title: "Flat edge hangs (30mm)",
+            description:
+              "7-seconds on:3-seconds off x 4 reps. Sub to full bodyweight. 70% intensity. Flat edge or fingerboard. All 4-fingers with the PIP joint at 90-degrees."
+          },
+          {
+            title: "Concentric focused box jumps",
+            description:
+              '1 x 5 reps to a 18-30" surface pending athlete. Squat to 90-degrees, hold for 2-seconds, jump on the surface with a soft landing. Focus is acceleration and landing.'
+          },
+          {
+            title: "Flat edge hangs (30mm)",
+            description:
+              "7-seconds on:3-seconds off x 4 reps. Sub to full bodyweight. 70% intensity. Flat edge or fingerboard. All 4-fingers with the PIP joint at 90-degrees"
+          },
+          {
+            title: "Eccentric box drops",
+            description:
+              '1 x 5 reps from a 18-30" surface pending athlete. Stand on the surface, step forward and drop quickly with a soft landing. Focus is deceleration and force absorption.'
+          }
+        ],
+        [
+          {
+            title: "Feet down explosive pull-ups",
+            description:
+              "1 x 4-8 reps pending strength. Arms extended overhead, push with the toes to increase the velocity of each rep. Power focus on a bar or jugs. 1-2s. between reps."
+          },
+          {
+            title: "Forward jumps with a single leg landing",
+            description:
+              "1 x 10 reps (5 per leg). With both legs, Jump straight at a controlled distance and confidently absorb the landing. Focus is acceleration and deceleration."
+          },
+          {
+            title: "Moderate edge rapid hangs (20mm)",
+            description:
+              "5-seconds on:3-seconds off x 3 reps. Full bodyweight and 70% intensity. Engage the edge rapidly each rep. All 4-fingers with the PIP joint at 90-degrees."
+          },
+          {
+            title: "Chest elevated power push up.",
+            description:
+              "4-8 reps pending strength. Hands on a bench, arms shoulder width, press explosively to a standing position. Focus is acceleration and reducing the landing forces on the wrist."
+          },
+          {
+            title: "Single leg lateral jumps",
+            description:
+              "1 x 10 reps (5 per leg). With one leg, jump to the side at a controlled distance and confidently absorb the landing. Focus is acceleration and deceleration."
+          },
+          {
+            title: "Moderate edge rapid hangs (20mm)",
+            description:
+              "5-seconds on:3-seconds off x 3 reps. Full bodyweight and 70% intensity. Engage the edge rapidly each rep. All 4-fingers with the PIP joint at 90-degrees."
+          }
+        ],
+        [
+          {
+            title: " Countermovement jump and catch",
+            description:
+              "1 x 5-7 reps pending strength. Jump to a jug/bar and hold the 90-degree elbow angle for 3s. Catch hand could be one or two arm pending strength."
+          },
+          {
+            title: "Feet on power move",
+            description:
+              "1 x 8 reps (4 per arm). At least 5s. rest (off wall) between reps. Focus is highcoordination power. Alternate arms every rep and go the greatest distance possible with feet on."
+          },
+          {
+            title: "Countermovement jump and catch (angle)",
+            description:
+              "1 x 5-7 reps pending strength. Jump to a jug/bar and hold for 3s. Catch hand could be one or two arm pending strength."
+          },
+          {
+            title: "Feet off power move",
+            description:
+              "1 x 6 reps (3 per arm). At least 5s. rest (off wall) between reps. Focus is highcoordination power. Alternate arms every rep and go moderate distance with feet coming off for the catch."
+          }
         ]
-     ];
-     let contents = ipp.map((part,i) => `<section>
+      ];
+      let contents = ipp
+        .map(
+          (part, i) => `<section>
       <h2>
-        Circuit ${i+1}
+        Circuit ${i + 1}
       </h2>
-        ${part.map((ex,i) => `
+        ${part.map(
+          (ex, i) => `
         <div class="cell">
-          <span class="number">${i+1}</span>
+          <span class="number">${i + 1}</span>
           <!-- <div class="imageWrap">
               <img src="https://i.ytimg.com/vi/Rzeo2EMk-rk/maxresdefault.jpg"/>
           </div> -->
@@ -279,10 +344,78 @@
             <h5 class="exTitle">${ex.title}</h5>
             <p class="exDesc"> ${ex.description} </p>
             </div>
-        </div>`)}
-      </section>`).join(' ');
+        </div>`
+        )}
+      </section>`
+        )
+        .join(" ");
 
-      document.body.innerHTML = contents;
-  </script>
+      const root = document.getElementById("root");
+      root.innerHTML = contents;
+
+      var minutes = 00;
+      var seconds = 00;
+      var tens = 00;
+      var appendTens = document.getElementById("tens");
+      var appendSeconds = document.getElementById("seconds");
+      var appendMinutes = document.getElementById("minutes");
+      var buttonStart = document.getElementById("button-start");
+      var buttonStop = document.getElementById("button-stop");
+      var buttonReset = document.getElementById("button-reset");
+      var Interval;
+
+      buttonStart.onclick = function () {
+        clearInterval(Interval);
+        Interval = setInterval(startTimer, 10);
+      };
+
+      buttonStop.onclick = function () {
+        clearInterval(Interval);
+      };
+
+      buttonReset.onclick = function () {
+        clearInterval(Interval);
+        tens = "00";
+        seconds = "00";
+        minutes = "00";
+        appendTens.innerHTML = tens;
+        appendSeconds.innerHTML = seconds;
+        appendMinutes.innerHTML = minutes;
+      };
+
+      function startTimer() {
+        tens++;
+
+        if (tens <= 9) {
+          appendTens.innerHTML = "0" + tens;
+        }
+
+        if (tens > 9) {
+          appendTens.innerHTML = tens;
+        }
+
+        if (tens > 99) {
+          seconds++;
+          appendSeconds.innerHTML = "0" + seconds;
+          tens = 0;
+          appendTens.innerHTML = "0" + 0;
+        }
+
+        if (seconds > 9) {
+          appendSeconds.innerHTML = seconds;
+        }
+
+        if (seconds > 59) {
+          minutes++;
+          appendMinutes.innerHTML = "0" + minutes;
+          seconds = 0;
+          appendSeconds.innerHTML = "0" + 0;
+        }
+
+        if (minutes > 9) {
+          appendMinutes.innerHTML = minutes;
+        }
+      }
+    </script>
   </body>
 </html>
